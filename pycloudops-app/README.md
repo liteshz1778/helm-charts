@@ -143,7 +143,7 @@ pycloudops-app/
 
 👨‍💻 Author
 
-Litesh Zadane
+Litesh Zadane<br>
 🚀 DevOps Engineer | SRE | Cloud & Platform Engineer
 
 GitHub:
