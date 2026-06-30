@@ -1,7 +1,12 @@
-## 📦 Helm Repository
+## 📦 Helm Chart Repository
 
-[![Helm Chart](https://img.shields.io/badge/Helm-Chart-blue?logo=helm)](
-https://liteshz1778.github.io/helm-charts/)
+### GitHub Repository
+🔗 Source Code:
+https://github.com/liteshz1778/helm-charts
+
+### Helm Repository
+🔗 Helm Chart URL:
+https://liteshz1778.github.io/helm-charts/
 
 ---
 
