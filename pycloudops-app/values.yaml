@@ -1,0 +1,82 @@
+# Configure Dynamic Values for web k8s components
+web:
+  deployment:
+    replicaCount: 1
+    hpa: 
+      enabled: false
+    containers:
+      - image:
+          name: liteshz/python-demo-flask-app
+          tag: v17
+        pullPolicy: IfNotPresent
+        restartPloicy: OnFailure
+        exposedPort: 
+          - 5000
+        livenessProbe:
+          httpGet:
+            path: /
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+  svc:
+    type: NodePort
+    ports:
+      - port: 5000
+        targetPort: 5000
+        nodePort: 32767
+
+# Configure web-mysqldb configMap in env variables
+configMap:
+  data:
+    DB_USER: root
+    DB_NAME: cloud
+    MYSQL_DATABASE: cloud
+
+# Configure mysqldb secret in env variables
+secret:
+  type: Opaque
+  data:
+    DB_PASSWORD: cm9vdA==
+    MYSQL_ROOT_PASSWORD: cm9vdA==
+   
+# Configure Storage Class for mysqldb
+mysqldb-sc:
+  provisioner: kubernetes.io/no-provisioner
+  reclaimPolicy: Retain
+  volumeBindingMode: WaitForFirstConsumer
+
+# Configure Persistent Volume for mysqldb
+mysqldb-pvc:
+  name: mysqldb-vol
+  storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/lib/mysql
+    type: DirectoryOrCreate
+
+# Configure StatefulSet & Headless SVC for mysqldb 
+db:
+  statefulset:
+    replicaCount: 1
+    hpa:
+      enabled: false
+    containers:
+      - image:
+          name: mysql
+          tag: 8.4
+        pullPolicy: IfNotPresent
+        restartPloicy: OnFailure
+  headless-svc:
+    ports:
+      - port: 3306
+        targetPort: 3306

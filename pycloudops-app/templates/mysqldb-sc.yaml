@@ -1,0 +1,9 @@
+{{- with index .Values "mysqldb-sc" }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ $.Release.Name }}-mysqldb-sc
+provisioner: {{ .provisioner }}
+reclaimPolicy: {{ .reclaimPloicy }}
+volumeBindingMode: {{ .volumeBindingMode }}
+{{- end }}

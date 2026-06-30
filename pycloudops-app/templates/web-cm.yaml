@@ -1,0 +1,13 @@
+{{- with .Values.configMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Release.Name }}-web-mysqldb-cm
+data:
+  {{- with .data }}
+  DB_HOST: {{ $.Release.Name }}-mysqldb-headless-svc
+  DB_USER: {{ .DB_USER }}
+  DB_NAME: {{ .DB_NAME }}
+  MYSQL_DATABASE: {{ .MYSQL_DATABASE }}
+  {{- end }}
+{{- end }}

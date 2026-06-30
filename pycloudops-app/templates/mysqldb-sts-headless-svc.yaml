@@ -1,0 +1,81 @@
+{{- with .Values.db }}
+{{- with .statefulset }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: {{ $.Release.Name }}-mysqldb-sts
+spec:
+  {{- if not .replicaCount }}
+  replicas: {{ .replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "db-labels" . | indent 6 }}
+  template:
+    metadata:
+      name: {{ $.Release.Name }}-mysqldb-pod
+      labels:
+        {{- include "db-labels" . | indent 8 }}
+    spec:
+      containers:
+        {{- with index .containers 0 }}
+        - name: {{ $.Release.Name }}-mysqldb-container
+          {{- with .image }}
+          image: "{{ .name }}:{{ .tag }}"
+          {{- end }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Release.Name }}-mysqldb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE 
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $.Release.Name }}-web-mysqldb-cm
+                  key: MYSQL_DATABASE
+
+          # Mounting Volume to emails.txt file
+          {{- with index $.Values "mysqldb-pvc" }}
+          volumeMounts:
+            - name: {{ .name }}
+              mountPath: {{ .hostPath.path }}
+          {{- end }}
+        {{- end }}
+
+  # Attaching Volume to pod
+  {{- with index $.Values "mysqldb-pvc" }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .name }}
+      spec:
+        resources: 
+          requests: 
+            storage: {{ .storage }}
+        accessModes:
+        {{- range .accessModes }}
+          - {{ . }}
+        {{- end }}
+        storageClassName: {{ $.Release.Name }}-mysqldb-sc
+  {{- end }}
+{{- end }}
+
+---
+
+{{- with index . "headless-svc" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-mysqldb-headless-svc
+spec:
+  clusterIP: None
+  selector:
+    {{- include "db-labels" . | indent 4 }}
+  ports:
+    {{- with index .ports 0 }}
+    - name: tcp
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+{{- end }}
+{{- end }}

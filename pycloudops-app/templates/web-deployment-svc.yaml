@@ -1,0 +1,73 @@
+{{- with .Values.web }}
+{{- with .deployment }}
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: {{ $.Release.Name }}-web-deployment
+  labels:
+    {{- include "web-labels" . | indent 4 }}
+spec:
+  {{- if not .hpa.enabled }}
+  replicas: {{ .replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "web-labels" . | indent 6 }}
+  template:
+    metadata:
+      name: {{ $.Release.Name }}-web-pod
+      labels:
+        {{- include "web-labels" . | indent 8 }}
+    spec:
+      containers:
+        {{- with index .containers 0 }}
+        - name: {{ $.Release.Name }}-web-container
+          {{- with .image }}
+          image: "{{ .name }}:{{ .tag }}"
+          {{- end }}
+          ports:
+            - containerPort: {{ index .exposedPort 0 }}
+          envFrom:
+            - configMapRef:
+                name: {{ $.Release.Name }}-web-mysqldb-cm
+            - secretRef:
+                name: {{ $.Release.Name }}-mysqldb-secret
+          livenessProbe:
+            httpGet:
+              path: {{ .livenessProbe.httpGet.path }}
+              port: {{ index .exposedPort 0 }}
+            initialDelaySeconds: {{ .livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .livenessProbe.periodSeconds }}
+            failureThreshold: {{ .livenessProbe.failureThreshold }}
+            successThreshold: {{ .livenessProbe.successThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .readinessProbe.httpGet.path }}
+              port: {{ index .exposedPort 0 }}
+            initialDelaySeconds: {{ .readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .readinessProbe.periodSeconds }}
+            failureThreshold: {{ .readinessProbe.failureThreshold }}
+            successThreshold: {{ .readinessProbe.successThreshold }}
+        {{- end }}
+{{- end }}
+---
+
+{{- with .svc }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-web-svc
+  labels:
+    {{- include "web-labels" . | indent 4 }}
+spec:
+  type: {{ .type }}
+  selector:
+    {{- include "web-labels" . | indent 4 }}
+  ports:
+    {{- with index .ports 0 }}
+    - port: {{ .port }}
+      targetPort: {{ .targetPort }}
+        #nodePort: {{ .nodePort }}
+    {{- end }}
+{{- end }}
+{{- end }}
