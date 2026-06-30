@@ -7,7 +7,7 @@ web:
     containers:
       - image:
           name: liteshz/python-demo-flask-app
-          tag: v17
+          tag: v21
         pullPolicy: IfNotPresent
         restartPloicy: OnFailure
         exposedPort: 
