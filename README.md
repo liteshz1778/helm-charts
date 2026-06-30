@@ -8,6 +8,10 @@ https://github.com/liteshz1778/helm-charts
 🔗 Helm Chart URL:
 https://liteshz1778.github.io/helm-charts/
 
+### Docker Hub Repository
+🔗 Docker Hub:  
+https://hub.docker.com/repository/docker/liteshz/python-demo-flask-app/general
+
 ---
 
 ## 📦 Helm Chart Installation
