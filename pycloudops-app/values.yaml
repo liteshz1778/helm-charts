@@ -15,14 +15,14 @@ web:
         livenessProbe:
           httpGet:
             path: /
-          initialDelaySeconds: 20
+          initialDelaySeconds: 30
           periodSeconds: 10
           failureThreshold: 3
           successThreshold: 1
         readinessProbe:
           httpGet:
             path: /
-          initialDelaySeconds: 20
+          initialDelaySeconds: 30
           periodSeconds: 10
           failureThreshold: 3
           successThreshold: 1

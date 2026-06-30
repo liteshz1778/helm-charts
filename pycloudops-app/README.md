@@ -16,7 +16,7 @@ This Helm chart packages the complete application stack, including:
 
 ## 🏗️ Architecture
 
-```text
+```
                          👥 End Users
                               |
                               |

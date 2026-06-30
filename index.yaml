@@ -2,23 +2,36 @@ apiVersion: v1
 entries:
   pycloudops-app:
   - apiVersion: v2
-    appVersion: 0.21.0
-    created: "2026-06-30T11:34:34.14520083Z"
+    appVersion: v21
+    created: "2026-06-30T14:52:05.040976585Z"
     description: A Helm chart for Kubernetes
-    digest: cb35cbb8bcf76dc24a534b3c699d8460708e5d35f369641d16f5bb01520d6ba0
+    digest: 948e773f6b7df33e1cef5ff0032482e81e8f6671be63e950b039d2f0b9f8026c
+    icon: https://helm.sh/img/helm.svg
     name: pycloudops-app
     type: application
     urls:
-    - pycloudops-app-1.1.0.tgz
-    version: 1.1.0
+    - pycloudops-app-0.21.0.tgz
+    version: 0.21.0
   - apiVersion: v2
-    appVersion: 0.17.0
-    created: "2026-06-30T11:34:34.144939262Z"
+    appVersion: v17
+    created: "2026-06-30T14:52:05.040714422Z"
     description: A Helm chart for Kubernetes
-    digest: e7110ac133ee6b624ede187c0f41dcbe27ebd2794453940133c9413035030337
+    digest: 23cab1df2f253af1350dcdbd6d3f7c8ed8deac37c9efdbc6f15c3f730935c1ea
+    icon: https://helm.sh/img/helm.svg
     name: pycloudops-app
     type: application
     urls:
-    - pycloudops-app-0.1.0.tgz
-    version: 0.1.0
-generated: "2026-06-30T11:34:34.144581844Z"
+    - pycloudops-app-0.17.0.tgz
+    version: 0.17.0
+  - apiVersion: v2
+    appVersion: v5
+    created: "2026-06-30T14:52:05.041224401Z"
+    description: A Helm chart for Kubernetes
+    digest: 4af7629754b1817846b10e0a0b0c49b40533ca504025c8b8792b6c525cd92eb6
+    icon: https://helm.sh/img/helm.svg
+    name: pycloudops-app
+    type: application
+    urls:
+    - pycloudops-app-0.5.0.tgz
+    version: 0.5.0
+generated: "2026-06-30T14:52:05.040334933Z"
