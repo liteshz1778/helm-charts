@@ -123,7 +123,7 @@ helm upgrade pycloudops-app liteshz/pycloudops-app \
 ---
 
 ## Helm Chart Structure
-
+```
 pycloudops-app/
 │
 ├── Chart.yaml
@@ -138,7 +138,7 @@ pycloudops-app/
 │   └── pvc.yaml
 │
 └── README.md
-
+```
 ---
 
 👨‍💻 Author
