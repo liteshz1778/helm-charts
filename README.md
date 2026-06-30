@@ -9,8 +9,7 @@ https://github.com/liteshz1778/helm-charts
 https://liteshz1778.github.io/helm-charts/
 
 ### Docker Hub Repository
-🔗 Docker Hub:  
-https://hub.docker.com/repository/docker/liteshz/python-demo-flask-app/general
+🔗 Docker Hub: https://hub.docker.com/repository/docker/liteshz/python-demo-flask-app/general
 
 ---
 
