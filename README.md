@@ -15,14 +15,14 @@ https://liteshz1778.github.io/helm-charts/
 
 ## 📦 Helm Chart Installation
 
-Add Helm repository:
+### Add Helm repository:
 
 ```
 helm repo add liteshz https://liteshz1778.github.io/helm-charts/
 helm repo update
 ```
 
-## Install PyCloudOps Application:
+### Install PyCloudOps Application:
 
 ```
 helm install pycloudops-app liteshz/pycloudops-app
